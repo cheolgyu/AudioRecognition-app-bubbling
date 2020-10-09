@@ -9,33 +9,32 @@
 
     <ListView
         android:id="@+id/list_view"
-        android:layout_width="267dp"
-        android:layout_height="193dp"
+        android:layout_width="266dp"
+        android:layout_height="299dp"
         android:layout_gravity="top|center_horizontal"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="216dp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/quit"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.495" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/quit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
         android:text="exit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_view" />
 
     <ToggleButton
         android:id="@+id/toggleFlashLight"
         android:layout_width="88dp"
         android:layout_height="86dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/ic_action_flashlight"
         android:text=""
         android:textOff=""
@@ -53,5 +52,21 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="407dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-2187446084708913/8136975352"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

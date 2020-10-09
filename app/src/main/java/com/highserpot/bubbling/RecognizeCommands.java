@@ -1,4 +1,5 @@
 package com.highserpot.bubbling;
+
 import android.util.Log;
 import android.util.Pair;
 import java.util.ArrayDeque;
@@ -7,7 +8,9 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
-/** Reads in results from an instantaneous audio recognition model and smoothes them over time. */
+/**
+ * Reads in results from an instantaneous audio recognition model and smoothes them over time.
+ */
 public class RecognizeCommands {
     // Configuration settings.
     private List<String> labels = new ArrayList<String>();
@@ -46,7 +49,9 @@ public class RecognizeCommands {
         minimumTimeBetweenSamplesMs = inMinimumTimeBetweenSamplesMS;
     }
 
-    /** Holds information about what's been recognized. */
+    /**
+     * Holds information about what's been recognized.
+     */
     public static class RecognitionResult {
         public final String foundCommand;
         public final float score;

@@ -6,42 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Say one of the words below!"
-        android:id="@+id/textView"
-        android:textAlignment="center"
-        android:layout_gravity="top"
-        android:textSize="24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        />
 
     <ListView
         android:id="@+id/list_view"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
+        android:layout_width="267dp"
+        android:layout_height="193dp"
         android:layout_gravity="top|center_horizontal"
         android:textAlignment="center"
-        android:layout_marginTop="100dp"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/quit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.495" />
 
     <Button
         android:id="@+id/quit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quit"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="10dp"
-        />
+        android:text="Quit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="168dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

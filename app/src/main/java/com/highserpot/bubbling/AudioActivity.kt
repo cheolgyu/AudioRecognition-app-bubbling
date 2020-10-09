@@ -1,28 +1,25 @@
 package com.highserpot.bubbling
 
 import android.Manifest
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.media.AudioFormat
-import android.media.AudioRecord
-import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
 import android.os.Process
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import com.highserpot.bubbling.`interface`.FlashLight
 import com.highserpot.bubbling.`interface`.LabelColor
 import com.highserpot.bubbling.utils.Recognition
 import com.highserpot.bubbling.utils.Recording
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 
-
+val DETECTION_THRESHOLD = 0.95f
 val SAMPLE_RATE = 16000
 val SAMPLE_DURATION_MS = 1000
 val RECORDING_LENGTH = (SAMPLE_RATE * SAMPLE_DURATION_MS / 1000)
@@ -34,6 +31,8 @@ var recordingBuffer = ShortArray(RECORDING_LENGTH)
 var recordingOffset = 0
 var shouldContinueRecognition = true
 var shouldContinue = true
+var use_flashlight = false
+val MINIMUM_TIME_BETWEEN_SAMPLES_MS: Long = 30
 
 open class AudioActivity : AppCompatActivity() {
     // Constants that control the behavior of the recognition code and model
@@ -44,6 +43,8 @@ open class AudioActivity : AppCompatActivity() {
     // UI elements.
     private val REQUEST_RECORD_AUDIO = 4
     private var quitButton: Button? = null
+    lateinit var toggleFlashLightButton: Button
+
     private var labelsListView: ListView? = null
     private val LOG_TAG = AudioActivity::class.java.simpleName
 
@@ -54,12 +55,24 @@ open class AudioActivity : AppCompatActivity() {
     lateinit var labelColor: LabelColor
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         // Set up the UI.
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio)
 
+        toggleFlashLightButton = findViewById<View>(R.id.toggleFlashLight) as ToggleButton
 
+        toggleFlashLightButton.setOnClickListener {
+            it.isActivated
+            if ((toggleFlashLightButton as ToggleButton).isChecked) {
+                toggleFlashLightButton.background = getDrawable(R.drawable.ic_action_flashlight_off)
+                use_flashlight = true
+            } else {
+                toggleFlashLightButton.background = getDrawable(R.drawable.ic_action_flashlight)
+                use_flashlight = false
+            }
+        }
         quitButton = findViewById<View>(R.id.quit) as Button
         quitButton!!.setOnClickListener {
             moveTaskToBack(true)
@@ -74,12 +87,18 @@ open class AudioActivity : AppCompatActivity() {
         labelsListView!!.adapter = arrayAdapter
         labelColor = LabelColor(this, labelsListView!!)
         // Set up an object to smooth recognition results to increase accuracy.
-        recognition.init(assets, labelColor)
+        val fl = FlashLight(this)
+        fl.init()
+        recognition.init(assets, labelColor,fl)
 
 
         // Start the recording and recognition threads.
         requestMicrophonePermission()
         start()
+
+        if(BuildConfig.DEBUG){
+            toggleFlashLightButton.performClick()
+        }
     }
 
     private fun requestMicrophonePermission() {

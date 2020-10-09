@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
 
+
     <ListView
         android:id="@+id/list_view"
         android:layout_width="267dp"
@@ -27,5 +28,18 @@
         android:text="Quit"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="168dp" />
+
+    <ToggleButton
+        android:id="@+id/toggleFlashLight"
+        android:layout_width="88dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/ic_action_flashlight"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

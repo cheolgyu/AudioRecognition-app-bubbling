@@ -19,7 +19,7 @@ import com.highserpot.bubbling.utils.Recording
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 
-val DETECTION_THRESHOLD = 0.95f
+val DETECTION_THRESHOLD = 0.93f
 val SAMPLE_RATE = 16000
 val SAMPLE_DURATION_MS = 1000
 val RECORDING_LENGTH = (SAMPLE_RATE * SAMPLE_DURATION_MS / 1000)

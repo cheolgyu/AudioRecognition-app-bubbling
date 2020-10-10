@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">보글보글</string>
-    <string name="app_desc">마이크로 보글보글 소리를 인식하여 플래시로 알려줍니다.</string>
+    <string name="app_desc">물끓는 소리를 인식하여 \n플래시, 소리, 진동으로 알려줍니다.</string>
 </resources>

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.highserpot.bubbling.effect.FlashLightEffect
 import com.highserpot.bubbling.effect.LabelColorEffect
 import com.highserpot.bubbling.effect.VibratorEffect
+import com.highserpot.bubbling.effect.VolumeEffect
 import com.highserpot.bubbling.utils.Recognition
 import com.highserpot.bubbling.utils.Recording
 import java.util.*
@@ -34,6 +35,8 @@ var recordingOffset = 0
 var shouldContinueRecognition = true
 var shouldContinue = true
 var use_flashlight = false
+var use_vibration = false
+var use_volume = false
 val MINIMUM_TIME_BETWEEN_SAMPLES_MS: Long = 30
 
 open class AudioActivity : AppCompatActivity() {
@@ -44,8 +47,6 @@ open class AudioActivity : AppCompatActivity() {
 
     // UI elements.
     private val REQUEST_RECORD_AUDIO = 4
-    private var quitButton: Button? = null
-    lateinit var toggleFlashLightButton: Button
 
     private var labelsListView: ListView? = null
     private val LOG_TAG = AudioActivity::class.java.simpleName
@@ -54,49 +55,80 @@ open class AudioActivity : AppCompatActivity() {
     val recognition: Recognition = Recognition()
     val recording: Recording = Recording()
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         // Set up the UI.
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio)
+        uiListens()
 
-        toggleFlashLightButton = findViewById<View>(R.id.toggleFlashLight) as ToggleButton
 
-        toggleFlashLightButton.setOnClickListener {
-            it.isActivated
-            if ((toggleFlashLightButton as ToggleButton).isChecked) {
-                toggleFlashLightButton.background = getDrawable(R.drawable.ic_action_flashlight_off)
-                use_flashlight = true
-            } else {
-                toggleFlashLightButton.background = getDrawable(R.drawable.ic_action_flashlight)
-                use_flashlight = false
-            }
-        }
-        quitButton = findViewById<View>(R.id.quit) as Button
-        quitButton!!.setOnClickListener {
-            moveTaskToBack(true)
-            Process.killProcess(Process.myPid())
-            System.exit(1)
-        }
         labelsListView = findViewById<View>(R.id.list_view) as ListView
-
-
-        // Build a list view based on these labels.
         val arrayAdapter = ArrayAdapter(this, R.layout.list_text_item, displayedLabels)
         labelsListView!!.adapter = arrayAdapter
         val labelColorEffect = LabelColorEffect(this, labelsListView!!)
         val flashLightEffect = FlashLightEffect(this)
         val vibratorEffect = VibratorEffect(this)
+        val volumeEffect = VolumeEffect(this)
 
-        recognition.init(assets, labelColorEffect, flashLightEffect, vibratorEffect)
+        recognition.init(assets, labelColorEffect, flashLightEffect, vibratorEffect,volumeEffect)
 
 
         // Start the recording and recognition threads.
         requestMicrophonePermission()
         start()
 
+
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    fun uiListens() {
+        val quitButton = findViewById<View>(R.id.quit) as Button
+        quitButton.setOnClickListener {
+            moveTaskToBack(true)
+            Process.killProcess(Process.myPid())
+            System.exit(1)
+        }
+
+        val toggleFlashLightButton = findViewById<View>(R.id.toggleFlashLight) as ToggleButton
+        toggleFlashLightButton.setOnClickListener {
+            if ((toggleFlashLightButton as ToggleButton).isChecked) {
+                toggleFlashLightButton.background =
+                    getDrawable(R.drawable.ic_baseline_highlight_off_24)
+                use_flashlight = true
+            } else {
+                toggleFlashLightButton.background = getDrawable(R.drawable.ic_baseline_highlight_24)
+                use_flashlight = false
+            }
+        }
+
+        val toggleVibrationButton = findViewById<View>(R.id.toggleVibration) as ToggleButton
+        toggleVibrationButton.setOnClickListener {
+            if ((toggleVibrationButton as ToggleButton).isChecked) {
+                toggleVibrationButton.background =
+                    getDrawable(R.drawable.ic_baseline_vibration_off_24)
+                use_vibration = true
+            } else {
+                toggleVibrationButton.background = getDrawable(R.drawable.ic_baseline_vibration_24)
+                use_vibration = false
+            }
+        }
+
+        val toggleVolumeButton = findViewById<View>(R.id.toggleVolume) as ToggleButton
+        toggleVolumeButton.setOnClickListener {
+            if ((toggleVolumeButton as ToggleButton).isChecked) {
+                toggleVolumeButton.background =
+                    getDrawable(R.drawable.ic_baseline_volume_off_24)
+                use_volume = true
+            } else {
+                toggleVolumeButton.background = getDrawable(R.drawable.ic_baseline_volume_24)
+                use_volume = false
+            }
+        }
+
         if (BuildConfig.DEBUG) {
             toggleFlashLightButton.performClick()
+            toggleVibrationButton.performClick()
+            toggleVolumeButton.performClick()
         }
     }
 

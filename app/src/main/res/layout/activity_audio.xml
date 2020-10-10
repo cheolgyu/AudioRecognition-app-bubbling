@@ -9,11 +9,11 @@
 
     <ListView
         android:id="@+id/list_view"
-        android:layout_width="266dp"
-        android:layout_height="299dp"
+        android:layout_width="264dp"
+        android:layout_height="177dp"
         android:layout_gravity="top|center_horizontal"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="360dp"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,44 +29,71 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_view" />
 
+
     <ToggleButton
         android:id="@+id/toggleFlashLight"
         android:layout_width="88dp"
         android:layout_height="86dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/ic_action_flashlight"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/ic_baseline_highlight_24"
         android:text=""
         android:textOff=""
         android:textOn=""
         app:layout_constraintBottom_toTopOf="@+id/list_view"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ToggleButton
+        android:id="@+id/toggleVolume"
+        android:layout_width="88dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/ic_baseline_volume_24"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toTopOf="@+id/list_view"
+        app:layout_constraintStart_toEndOf="@+id/toggleFlashLight" />
+
+
+    <ToggleButton
+        android:id="@+id/toggleVibration"
+        android:layout_width="88dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/ic_baseline_vibration_24"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toTopOf="@+id/list_view"
+        app:layout_constraintStart_toEndOf="@+id/toggleVolume" />
+
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_width="365dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="32dp"
         android:text="@string/app_desc"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="407dp"
         android:layout_height="63dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         ads:adSize="SMART_BANNER"
         ads:adUnitId="ca-app-pub-2187446084708913/8136975352"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

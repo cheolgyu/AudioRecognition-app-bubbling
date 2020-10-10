@@ -12,14 +12,16 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import com.highserpot.bubbling.`interface`.FlashLight
-import com.highserpot.bubbling.`interface`.LabelColor
+import com.highserpot.bubbling.effect.FlashLightEffect
+import com.highserpot.bubbling.effect.LabelColorEffect
+import com.highserpot.bubbling.effect.VibratorEffect
 import com.highserpot.bubbling.utils.Recognition
 import com.highserpot.bubbling.utils.Recording
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 
-val DETECTION_THRESHOLD = 0.93f
+//val DETECTION_THRESHOLD = 0.93f
+val DETECTION_THRESHOLD = 0.96f
 val SAMPLE_RATE = 16000
 val SAMPLE_DURATION_MS = 1000
 val RECORDING_LENGTH = (SAMPLE_RATE * SAMPLE_DURATION_MS / 1000)
@@ -52,9 +54,6 @@ open class AudioActivity : AppCompatActivity() {
     val recognition: Recognition = Recognition()
     val recording: Recording = Recording()
 
-    lateinit var labelColor: LabelColor
-
-
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         // Set up the UI.
@@ -85,18 +84,18 @@ open class AudioActivity : AppCompatActivity() {
         // Build a list view based on these labels.
         val arrayAdapter = ArrayAdapter(this, R.layout.list_text_item, displayedLabels)
         labelsListView!!.adapter = arrayAdapter
-        labelColor = LabelColor(this, labelsListView!!)
-        // Set up an object to smooth recognition results to increase accuracy.
-        val fl = FlashLight(this)
-        fl.init()
-        recognition.init(assets, labelColor,fl)
+        val labelColorEffect = LabelColorEffect(this, labelsListView!!)
+        val flashLightEffect = FlashLightEffect(this)
+        val vibratorEffect = VibratorEffect(this)
+
+        recognition.init(assets, labelColorEffect, flashLightEffect, vibratorEffect)
 
 
         // Start the recording and recognition threads.
         requestMicrophonePermission()
         start()
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             toggleFlashLightButton.performClick()
         }
     }

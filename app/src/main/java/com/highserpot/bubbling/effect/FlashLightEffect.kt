@@ -1,4 +1,4 @@
-package com.highserpot.bubbling.`interface`
+package com.highserpot.bubbling.effect
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -12,14 +12,18 @@ import com.highserpot.bubbling.MINIMUM_TIME_BETWEEN_SAMPLES_MS
 import com.highserpot.bubbling.use_flashlight
 
 
-class FlashLight(val ctx: Context) {
+class FlashLightEffect(val ctx: Context) : EffectService {
+    override fun play() {
+        super.play()
+        turnOnFlashLight()
+    }
     var isFlashOn = false
 
     var hasFlash = false
     lateinit var mCameraManager: CameraManager
     lateinit var mCameraId: String
 
-    fun init() {
+    init {
         checkFlash()
         mCameraManager = ctx.getSystemService(Context.CAMERA_SERVICE) as CameraManager
         try {
@@ -36,7 +40,7 @@ class FlashLight(val ctx: Context) {
                     mCameraManager.setTorchMode(mCameraId, true)
                     Handler(Looper.getMainLooper()).postDelayed(Runnable {
                         mCameraManager.setTorchMode(mCameraId, false)
-                    }, MINIMUM_TIME_BETWEEN_SAMPLES_MS/2)
+                    }, MINIMUM_TIME_BETWEEN_SAMPLES_MS / 2)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
